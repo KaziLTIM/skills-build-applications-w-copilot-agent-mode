@@ -71,81 +71,107 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
 
-WSGI_APPLICATION = 'octofit_tracker.wsgi.application'
-#
-ALLOWED_HOSTS = ['*']
-# Removed duplicate/incorrect ALLOWED_HOSTS assignment
-# Database
+            from pathlib import Path
+            import os
 
-# Using djongo to connect Django ORM to MongoDB
-# https://djongo.readthedocs.io/
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',  # djongo engine for MongoDB
-        'NAME': 'octofit_db',
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': 'mongodb://localhost:27017',
-            # Add more client options as needed
-        }
-    }
-}
+            BASE_DIR = Path(__file__).resolve().parent.parent
 
+            SECRET_KEY = 'django-insecure-!$#octofit_tracker_secret_key$#'
 
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+            DEBUG = True
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
+            ALLOWED_HOSTS = ['*']
 
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+            INSTALLED_APPS = [
+                'django.contrib.admin',
+                'django.contrib.auth',
+                'django.contrib.contenttypes',
+                'django.contrib.sessions',
+                'django.contrib.messages',
+                'django.contrib.staticfiles',
+                'rest_framework',
+                'corsheaders',
+                'octofit_tracker',
+            ]
 
-MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+            MIDDLEWARE = [
+                'django.middleware.security.SecurityMiddleware',
+                'django.contrib.sessions.middleware.SessionMiddleware',
+                'corsheaders.middleware.CorsMiddleware',
+                'django.middleware.common.CommonMiddleware',
+                'django.middleware.csrf.CsrfViewMiddleware',
+                'django.contrib.auth.middleware.AuthenticationMiddleware',
+                'django.contrib.messages.middleware.MessageMiddleware',
+                'django.middleware.clickjacking.XFrameOptionsMiddleware',
+            ]
 
+            ROOT_URLCONF = 'octofit_tracker.urls'
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
+            TEMPLATES = [
+                {
+                    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+                    'DIRS': [],
+                    'APP_DIRS': True,
+                    'OPTIONS': {
+                        'context_processors': [
+                            'django.template.context_processors.debug',
+                            'django.template.context_processors.request',
+                            'django.contrib.auth.context_processors.auth',
+                            'django.contrib.messages.context_processors.messages',
+                        ],
+                    },
+                },
+            ]
 
-LANGUAGE_CODE = 'en-us'
+            WSGI_APPLICATION = 'octofit_tracker.wsgi.application'
 
-TIME_ZONE = 'UTC'
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'djongo',
+                    'NAME': 'octofit_db',
+                    'ENFORCE_SCHEMA': False,
+                    'CLIENT': {
+                        'host': 'mongodb://localhost:27017',
+                    },
+                }
+            }
 
-USE_I18N = True
+            AUTH_PASSWORD_VALIDATORS = [
+                {
+                    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+                },
+                {
+                    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+                },
+                {
+                    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+                },
+                {
+                    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+                },
+            ]
 
-USE_TZ = True
+            LANGUAGE_CODE = 'en-us'
 
+            TIME_ZONE = 'UTC'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
+            USE_I18N = True
 
-STATIC_URL = 'static/'
+            USE_TZ = True
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+            STATIC_URL = '/static/'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+            DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+            CORS_ALLOW_ALL_ORIGINS = True
+
+            REST_FRAMEWORK = {
+                'DEFAULT_AUTHENTICATION_CLASSES': [
+                    'rest_framework.authentication.SessionAuthentication',
+                    'rest_framework.authentication.BasicAuthentication',
+                ],
+                'DEFAULT_PERMISSION_CLASSES': [
+                    'rest_framework.permissions.IsAuthenticated',
+                ],
+            }
