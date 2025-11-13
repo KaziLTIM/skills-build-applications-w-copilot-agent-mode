@@ -1,3 +1,6 @@
+"""
+Populate the octofit_db database with test data
+"""
 from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):

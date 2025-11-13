@@ -129,6 +129,7 @@ TEMPLATES = [
             DATABASES = {
                 'default': {
                     'ENGINE': 'djongo',
+                        # djongo is the MongoDB connector for Django
                     'NAME': 'octofit_db',
                     'ENFORCE_SCHEMA': False,
                     'CLIENT': {
