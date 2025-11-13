@@ -77,9 +77,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'octofit_tracker.wsgi.application'
-
-            ALLOWED_HOSTS = ['*']
-                # Removed duplicate/incorrect ALLOWED_HOSTS assignment
+#
+ALLOWED_HOSTS = ['*']
+# Removed duplicate/incorrect ALLOWED_HOSTS assignment
 # Database
 
 # Using djongo to connect Django ORM to MongoDB
@@ -107,22 +107,24 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
+
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-            MIDDLEWARE = [
-                 'corsheaders.middleware.CorsMiddleware',
-                 'django.middleware.security.SecurityMiddleware',
-                 'django.contrib.sessions.middleware.SessionMiddleware',
-                 'django.middleware.common.CommonMiddleware',
-                 'django.middleware.csrf.CsrfViewMiddleware',
-                 'django.contrib.auth.middleware.AuthenticationMiddleware',
-                 'django.contrib.messages.middleware.MessageMiddleware',
-                 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-            ]
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 
