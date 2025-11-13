@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-#uu1s5ry401f2v1u=2%el=wob6=2(lz80n+7&03^kqalh*wyx)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+import os
+# Use environment variable for codespace name if available
+codespace_name = os.environ.get('CODESPACE_NAME')
+codespace_host = f"{codespace_name}-8000.app.github.dev" if codespace_name else None
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+if codespace_host:
+    ALLOWED_HOSTS.append(codespace_host)
 
 
 # Application definition
@@ -37,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'octofit_tracker.urls'
@@ -70,13 +79,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'octofit_tracker.wsgi.application'
 
             ALLOWED_HOSTS = ['*']
+                # Removed duplicate/incorrect ALLOWED_HOSTS assignment
 # Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# Using djongo to connect Django ORM to MongoDB
+# https://djongo.readthedocs.io/
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',  # djongo engine for MongoDB
+        'NAME': 'octofit_db',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': 'mongodb://localhost:27017',
+            # Add more client options as needed
+        }
     }
 }
 
